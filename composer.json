@@ -1,0 +1,20 @@
+{
+    "name": "renanmariano/php-assignment-renan-mariano",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Renan Mariano",
+            "email": "renanbym@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+          "Core\\": "_core",
+          "Core\\Router\\": "_core/router",
+          "App\\": "app",
+          "App\\Models\\": "app/models",
+          "App\\Helpers\\": "app/_helpers"
+        }
+      },
+    "require": {}
+}
