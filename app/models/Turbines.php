@@ -2,8 +2,11 @@
 
 namespace App\Controllers;
 
+class Turbines extends DAO{
 
-class Turbines{
+    public function __construct(){
+
+    }
 
     public function import(){
         

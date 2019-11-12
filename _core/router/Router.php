@@ -32,8 +32,12 @@ class Router{
       return '/';
     }
 
-
-
+    $string = strtolower($result);
+    preg_match_all('/^(.*)\?(.*)$/', $string, $urls);
+    var_dump($urls);
+    if($urls && isset($urls[1]) && $urls[1] ){
+      return $urls[1];
+    }
 
     return $result;
   }
@@ -54,15 +58,21 @@ class Router{
   function resolve(){
     $methodDictionary = $this->{strtolower($this->request->requestMethod)};
     $formatedRoute = $this->formatRoute($this->request->requestUri);
+    
+var_dump( $methodDictionary);
+var_dump( $formatedRoute);
 
-    if(!isset($methodDictionary) || !isset($formatedRoute) || !isset($methodDictionary[$formatedRoute]) || is_null($methodDictionary[$formatedRoute])){
+    if(isset($methodDictionary) && isset($formatedRoute) && isset($methodDictionary[$formatedRoute]) && $methodDictionary[$formatedRoute]){
+
+      $method = $methodDictionary[$formatedRoute];
+      echo call_user_func_array($method, array($this->request));
+      return;
+
+    }else{
       $this->defaultRequestHandler();
       return;
     }
 
-    $method = $methodDictionary[$formatedRoute];
-
-    echo call_user_func_array($method, array($this->request));
   }
 
   function __destruct(){
