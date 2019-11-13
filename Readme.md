@@ -10,6 +10,7 @@ $ composer run start
 SITE >> http://localhost:8882/
 
 ##  [Swagger](https://pro-drone.herokuapp.com/swagger)
+* https://pro-drone.herokuapp.com/swagger
 
 ## Test
 ```sh
