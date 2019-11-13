@@ -2,68 +2,80 @@
 
 namespace App\Models;
 
-class Turbines{
+class Turbines
+{
 
-    public function __construct(){
+    private $id;
+    private $name;
+    private $type;
+    private $lat;
+    private $lon;
+
+    public function __construct()
+    {
     }
 
-    public function import(){
-        $items = [];
-        $file = fopen('turbines.csv', 'r');
-
-
-        while (($line = fgetcsv($file)) !== FALSE) {
-            $items[] = $line;
-            $query = \App\Models\Connection::getConn()->prepare('INSERT INTO turbines (`name`, `type`, `lat`, `lon`) VALUES (?, ?, ?, ?)');
-       
-            $query->bindParam(1, $line[0]);
-            $query->bindParam(2, $line[1]);
-            $query->bindParam(3, $line[2]);
-            $query->bindParam(4, $line[3]);
-
-            return $query->execute();
-        }
-        fclose($file);
-
-        return $items;
+    public function setId(Int $id)
+    {
+        if(!$id) throw new Exception('Field `id` is required');
+        $this->id = $id;
     }
 
-    public function create( $values ){
-
-        $query = \App\Models\Connection::getConn()->prepare('INSERT INTO turbines (`name`, `type`, `lat`, `lon`) VALUES (?, ?, ?, ?)');
-
-        foreach( $values as $key => $value ){
-            $query->bindParam($key + 1, $value);
-        }
-
-        return $query->execute();
-
+    public function getId()
+    {
+        return $this->id;
     }
 
-    public function list(){
-        $query = \App\Models\Connection::getConn()->query('SELECT * FROM turbines');
-        return $query->fetchAll(\PDO::FETCH_CLASS);
+
+    public function setName(String $name)
+    {
+        if(!$name) throw new Exception('Field `name` is required');
+        $this->name = $name;
     }
 
-    public function update( $id, $values ){
-
-        $query = \App\Models\Connection::getConn()->prepare('UPDATE turbines SET name=:name, type=:type, lat=:lat, lon=:lon WHERE id = :id');
-
-        $query->bindParam(':id', $id);
-
-        foreach( $values as $key => $value ){
-            $query->bindParam($key, $value);
-        }
-
-        return $query->execute();
-
+    public function getName()
+    {
+        return $this->name;
     }
 
-    public function delete( $id ){
-        $query = \App\Models\Connection::getConn()->prepare('DELETE FROM turbines WHERE id = :id');
-        $query->bindParam(':id', $id);
 
-        return $query->execute();
+
+    public function setType(String $type)
+    {
+        if(!$type) throw new Exception('Field `type` is required');
+        $this->type = $type;
     }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+
+
+    public function setLat(String $lat)
+    {
+        if(!$lat) throw new Exception('Field `lat` is required');
+        $this->lat = $lat;
+    }
+
+    public function getLat()
+    {
+        return $this->lat;
+    }
+
+
+
+    public function setLon(String $lon)
+    {
+        if(!$lon) throw new Exception('Field `lon` is required');
+        $this->lon = $lon;
+    }
+
+    public function getLon()
+    {
+        return $this->lon;
+    }
+
 
 }

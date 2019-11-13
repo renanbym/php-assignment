@@ -13,6 +13,7 @@
           "Core\\Router\\": "_core/router",
           "App\\": "app",
           "App\\Models\\": "app/models",
+          "App\\Controllers\\": "app/constrollers",
           "App\\Helpers\\": "app/_helpers"
         }
       },
