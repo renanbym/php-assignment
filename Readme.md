@@ -24,9 +24,9 @@ You have the total freedom to decide on how to achieve this. There are, however,
 * You __can__ put comments where you describe why you do certain things or just explaining some more high level decision.
 * You __can__ change storage system for turbine data.
 * __All above rules are very important!__
-  * Have to, may not - this is mandatory.
-  * Could, should - this is strongly recommended. 
-   * Can - it's up to you.
+* Have to, may not - this is mandatory.
+* Could, should - this is strongly recommended. 
+* Can - it's up to you.
 
 ### Bonus
 
