@@ -1,3 +1,29 @@
+# Assigment
+
+To do run in localhost
+## Local
+```sh
+$ composer install
+$ composer run start
+```
+
+SITE >> http://localhost:8882/
+
+##  [Swagger](https://pro-drone.herokuapp.com/swagger)
+
+## Test
+```sh
+$ composer install
+$ composer run test
+```
+
+##  [Heroku](https://pro-drone.herokuapp.com/)
+
+To do run in online
+* https://pro-drone.herokuapp.com/
+
+---
+
 # Assigment Description
 
 The attachment named __example.php__ is a simple PHP script. It's job is to serve one json-encoded string in response to

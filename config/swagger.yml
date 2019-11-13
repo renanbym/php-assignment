@@ -1,0 +1,186 @@
+swagger: "2.0"
+info:
+  description: ""
+  version: "1.0.0"
+  title: "API Turbines"
+  contact:
+    email: "renanbym@gmail.comn"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "pro-drone.herokuapp.com"
+basePath: "/"
+tags:
+- name: "turbines"
+  description: "Everything about your Turbines"
+schemes:
+- "https"
+- "http"
+paths:
+  /turbines:
+    post:
+      tags:
+      - "turbines"
+      summary: "Add a new turbine"
+      description: ""
+      operationId: "addTurbine"
+      consumes:
+      - "application/x-www-form-urlencoded"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Turbine object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/ApiResponseTurbine"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/ApiResponseTurbine"
+        400:
+          description: ""
+          schema:
+            $ref: "#/definitions/ApiResponse"
+    put:
+      tags:
+      - "turbines"
+      summary: "Update an existing turbine"
+      description: ""
+      operationId: "updateTurbine"
+      consumes:
+      - "application/x-www-form-urlencoded"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Turbine object that needs to be updated"
+        required: true
+        schema:
+          $ref: "#/definitions/ApiResponseTurbine"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/ApiResponseTurbine"
+        400:
+          description: ""
+          schema:
+            $ref: "#/definitions/ApiResponse"
+    get:
+      tags:
+      - "turbines"
+      summary: "Finds Turbine"
+      description: "List all bank Turbine"
+      operationId: "findTurbine"
+      consumes:
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "id"
+        in: "query"
+        description: "turbine id"
+        type: "string"
+      responses:
+        200:
+          description: ""
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ApiResponseTurbine"
+        400:
+          description: ""
+          schema:
+            $ref: "#/definitions/ApiResponse"
+    delete:
+      tags:
+      - "turbines"
+      summary: "Deletes a turbines"
+      description: ""
+      operationId: "deleteTurbines"
+      consumes:
+      - "application/x-www-form-urlencoded"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "turbineId"
+        in: "path"
+        description: "Turbine id to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/ApiResponse"
+        400:
+          description: ""
+          schema:
+            $ref: "#/definitions/ApiResponse"    
+  /turbines/import:
+    post:
+      tags:
+      - "turbines"
+      summary: "Import turbines from csv to store"
+      description: ""
+      operationId: "updateTurbineCSV"
+      consumes:
+      - "application/x-www-form-urlencoded"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: ""
+          schema:
+            $ref: "#/definitions/ApiResponseTurbine"
+        404:
+          description: ""
+          schema:
+            $ref: "#/definitions/ApiResponse"
+
+definitions:
+  Turbine:
+    type: "object"
+    required:
+    - "name"
+    - "type"
+    - "lat"
+    - "lon"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      type:
+        type: "string"
+      lat:
+        type: "string"
+      lon:
+        type: "string"
+ 
+    xml:
+      name: "Turbine"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      data:
+        type: "string"
+      message:
+        type: "string"
+  ApiResponseTurbine:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      data:
+        $ref: "#/definitions/Turbine"
+      message:
+        type: "string"
