@@ -17,7 +17,7 @@ class Turbines
 
     public function setId(Int $id)
     {
-        if(!$id) throw new Exception('Field `id` is required');
+        if(!$id) throw new \Exception('Field `id` is required');
         $this->id = $id;
     }
 
@@ -29,7 +29,7 @@ class Turbines
 
     public function setName(String $name)
     {
-        if(!$name) throw new Exception('Field `name` is required');
+        if(!$name) throw new \Exception('Field `name` is required');
         $this->name = $name;
     }
 
@@ -42,7 +42,7 @@ class Turbines
 
     public function setType(String $type)
     {
-        if(!$type) throw new Exception('Field `type` is required');
+        if(!$type) throw new \Exception('Field `type` is required');
         $this->type = $type;
     }
 
@@ -55,7 +55,7 @@ class Turbines
 
     public function setLat(String $lat)
     {
-        if(!$lat) throw new Exception('Field `lat` is required');
+        if(!$lat) throw new \Exception('Field `lat` is required');
         $this->lat = $lat;
     }
 
@@ -68,7 +68,7 @@ class Turbines
 
     public function setLon(String $lon)
     {
-        if(!$lon) throw new Exception('Field `lon` is required');
+        if(!$lon) throw new \Exception('Field `lon` is required');
         $this->lon = $lon;
     }
 

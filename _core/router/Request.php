@@ -47,5 +47,28 @@ class Request implements \Core\Router\IRequest{
       }
       return $body;
     }
+
+    if ($this->requestMethod == "PUT")
+    {
+      parse_str(file_get_contents("php://input"),$post_vars);
+      $body = array();
+      foreach($post_vars as $key => $value)
+      {
+        $body[$key] = $value;
+      }
+      return $body;
+    }
+
+    if ($this->requestMethod == "DELETE")
+    {
+      parse_str(file_get_contents("php://input"),$post_vars);
+      $body = array();
+      foreach($post_vars as $key => $value)
+      {
+        $body[$key] = $value;
+      }
+      return $body;
+    }
+
   }
 }

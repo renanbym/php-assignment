@@ -39,7 +39,7 @@ class Turbines
      * @param array $values [id, name, type, lat, lon]
      * @return array Turbines
      */
-    function list(array $values = []): \App\Models\Turbines
+    function list(array $values = []): ?array
     {
 
         /**
@@ -47,41 +47,47 @@ class Turbines
          */
         $array_allowed = ['id', 'name', 'type', 'lat', 'lon'];
 
-        $sql = 'SELECT * FROM turbines WHERE 1';
+        $sql = "SELECT * FROM turbines WHERE 1 ";
 
         if (isset($values) && count($values)) {
             foreach ($values as $key => $value) {
-                $sql .= '  AND {$key} = :{$key}';
                 if (!in_array($key, $array_allowed)) {
-                    throw new Exception('The field `{$key}` is not valid');
+                    throw new \Exception("The field `{$key}` is not valid");
                 }
+                $sql .= " AND {$key} = :{$key} ";
             }
         }
 
-        $query = \App\Controllers\Connection::getConn()->query($sql);
+        $query = \App\Controllers\Connection::getConn()->prepare($sql);
         if (isset($values) && count($values)) {
             foreach ($values as $key => $value) {
-                $query->bindParam(':{$key}', $value);
+                $query->bindParam(":{$key}", $value);
             }
-
         }
 
+        $query->execute();
+        
         return $query->fetchAll(\PDO::FETCH_CLASS);
+
     }
 
     public function create(\App\Models\Turbines $turbine)
     {
 
         if (!$turbine->getName() || !$turbine->getType() || !$turbine->getLat() || !$turbine->getLon()) {
-            throw new Exception('All fields are required');
+            throw new \Exception('All fields are required');
         }
-
         $query = \App\Controllers\Connection::getConn()->prepare('INSERT INTO turbines (`name`, `type`, `lat`, `lon`) VALUES (:name, :type, :lat, :lon)');
 
-        $query->bindParam(':name', $turbine->getName());
-        $query->bindParam(':type', $turbine->getType());
-        $query->bindParam(':lat', $turbine->getLat());
-        $query->bindParam(':lon', $turbine->getLon());
+        $name = $turbine->getName();
+        $type = $turbine->getType();
+        $lat = $turbine->getLat();
+        $lon = $turbine->getLon();
+
+        $query->bindParam(':name', $name);
+        $query->bindParam(':type', $type);
+        $query->bindParam(':lat', $lat);
+        $query->bindParam(':lon', $lon);
 
         return $query->execute();
     }
@@ -90,16 +96,30 @@ class Turbines
     {
 
         if (!$turbine->getId() || !$turbine->getName() || !$turbine->getType() || !$turbine->getLat() || !$turbine->getLon()) {
-            throw new Exception('All fields are required');
+            throw new \Exception('All fields are required');
+        }
+
+        /**
+         * Check if id exists
+         */
+        $ck = $this->list(array('id' => $turbine->getId()));
+        if (count($ck) <= 0) {
+            throw new \Exception('No item found');
         }
 
         $query = \App\Controllers\Connection::getConn()->prepare('UPDATE turbines SET name=:name, type=:type, lat=:lat, lon=:lon WHERE id = :id');
 
-        $query->bindParam(':id', $turbine->getId());
-        $query->bindParam(':name', $turbine->getName());
-        $query->bindParam(':type', $turbine->getType());
-        $query->bindParam(':lat', $turbine->getLat());
-        $query->bindParam(':lon', $turbine->getLon());
+        $id = $turbine->getId();
+        $name = $turbine->getName();
+        $type = $turbine->getType();
+        $lat = $turbine->getLat();
+        $lon = $turbine->getLon();
+
+        $query->bindParam(':id', $id);
+        $query->bindParam(':name', $name);
+        $query->bindParam(':type', $type);
+        $query->bindParam(':lat', $lat);
+        $query->bindParam(':lon', $lon);
 
         return $query->execute();
     }
@@ -108,11 +128,21 @@ class Turbines
     {
 
         if (!$turbine->getId()) {
-            throw new Exception('All fields are required');
+            throw new \Exception('All fields are required');
+        }
+
+        $id = $turbine->getId();
+
+        /**
+         * Check if id exists
+         */
+        $ck = $this->list(array('id' => $id));
+        if (count($ck) <= 0) {
+            throw new \Exception('No item found');
         }
 
         $query = \App\Controllers\Connection::getConn()->prepare('DELETE FROM turbines WHERE id = :id');
-        $query->bindParam(':id', $turbine->getId());
+        $query->bindParam(':id', $id);
 
         return $query->execute();
     }
